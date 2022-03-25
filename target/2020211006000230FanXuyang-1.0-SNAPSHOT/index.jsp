@@ -10,5 +10,8 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <br/>
+<a href="config">config</a>
+<br/>
+<a href="register.jsp">register</a> <br/>
 </body>
 </html>
