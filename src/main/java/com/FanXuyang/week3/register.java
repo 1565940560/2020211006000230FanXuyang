@@ -49,39 +49,40 @@ public class register extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ArrayList<user> list = new ArrayList<user>();
-        user x = new user();
-
-        try {
-            ps = con.prepareStatement("select  * from user");
-            ResultSet rs = null;
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                x = new user();
-                x.setID(rs.getString("ID"));
-                x.setName(rs.getString("name"));
-                x.setPassword(rs.getString("password"));
-                x.setEmail(rs.getString("Email"));
-                x.setGender(rs.getString("Gender"));
-                x.setBirthdate(rs.getString("Birthdate"));
-                list.add(x);
-            }
-            PrintWriter writer = resp.getWriter();
-            writer.println("<table border=\"1\">  <tr> <th>ID</th> <th>name</th> <th>password</th> <th>Email</th> <th>Gender</th> <th>Birthdate</th> </tr>");
-            for (user ur: list) {
-                writer.println("<tr>");
-                writer.println("<td>" + ur.getID() + "</td>"
-                + "<td>" + ur.getName() + "</td>"
-                + "<td>" + ur.getPassword() + "</td>"
-                + "<td>" + ur.getEmail() + "</td>"
-                + "<td>" + ur.getGender() + "</td>"
-                + "<td>" + ur.getBirthdate() + "</td>");
-                writer.println("</tr>");
-            }
-            writer.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        ArrayList<user> list = new ArrayList<user>();
+//        user x = new user();
+//
+//        try {
+//            ps = con.prepareStatement("select  * from user");
+//            ResultSet rs = null;
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                x = new user();
+//                x.setID(rs.getString("ID"));
+//                x.setName(rs.getString("name"));
+//                x.setPassword(rs.getString("password"));
+//                x.setEmail(rs.getString("Email"));
+//                x.setGender(rs.getString("Gender"));
+//                x.setBirthdate(rs.getString("Birthdate"));
+//                list.add(x);
+//            }
+//            PrintWriter writer = resp.getWriter();
+//            writer.println("<table border=\"1\">  <tr> <th>ID</th> <th>name</th> <th>password</th> <th>Email</th> <th>Gender</th> <th>Birthdate</th> </tr>");
+//            for (user ur: list) {
+//                writer.println("<tr>");
+//                writer.println("<td>" + ur.getID() + "</td>"
+//                + "<td>" + ur.getName() + "</td>"
+//                + "<td>" + ur.getPassword() + "</td>"
+//                + "<td>" + ur.getEmail() + "</td>"
+//                + "<td>" + ur.getGender() + "</td>"
+//                + "<td>" + ur.getBirthdate() + "</td>");
+//                writer.println("</tr>");
+//            }
+//            writer.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        resp.sendRedirect("Login.jsp");
     }
 
     @Override
