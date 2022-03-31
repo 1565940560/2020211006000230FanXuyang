@@ -1,6 +1,6 @@
 package com.FanXuyang.week3;
 
-import com.FanXuyang.pojo.user;
+import com.FanXuyang.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,16 +16,20 @@ public class register extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        String driver = getServletContext().getInitParameter("driver");
-        String url = getServletContext().getInitParameter("url");
-        String usr = getServletContext().getInitParameter("usr");
-        String password = getServletContext().getInitParameter("password");
-        try {
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, usr, password);
-            System.out.println("连接成功");
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+//        String driver = getServletContext().getInitParameter("driver");
+//        String url = getServletContext().getInitParameter("url");
+//        String usr = getServletContext().getInitParameter("usr");
+//        String password = getServletContext().getInitParameter("password");
+//        try {
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, usr, password);
+//            System.out.println("连接成功");
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+        con = (Connection) getServletContext().getAttribute("con");
+        if(con == null) {
+            System.out.println("wochao");
         }
     }
 
@@ -49,40 +53,40 @@ public class register extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        ArrayList<user> list = new ArrayList<user>();
-//        user x = new user();
-//
-//        try {
-//            ps = con.prepareStatement("select  * from user");
-//            ResultSet rs = null;
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                x = new user();
-//                x.setID(rs.getString("ID"));
-//                x.setName(rs.getString("name"));
-//                x.setPassword(rs.getString("password"));
-//                x.setEmail(rs.getString("Email"));
-//                x.setGender(rs.getString("Gender"));
-//                x.setBirthdate(rs.getString("Birthdate"));
-//                list.add(x);
-//            }
-//            PrintWriter writer = resp.getWriter();
-//            writer.println("<table border=\"1\">  <tr> <th>ID</th> <th>name</th> <th>password</th> <th>Email</th> <th>Gender</th> <th>Birthdate</th> </tr>");
-//            for (user ur: list) {
-//                writer.println("<tr>");
-//                writer.println("<td>" + ur.getID() + "</td>"
-//                + "<td>" + ur.getName() + "</td>"
-//                + "<td>" + ur.getPassword() + "</td>"
-//                + "<td>" + ur.getEmail() + "</td>"
-//                + "<td>" + ur.getGender() + "</td>"
-//                + "<td>" + ur.getBirthdate() + "</td>");
-//                writer.println("</tr>");
-//            }
-//            writer.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        resp.sendRedirect("Login.jsp");
+        ArrayList<User> list = new ArrayList<User>();
+        User x = new User();
+
+        try {
+            ps = con.prepareStatement("select  * from user");
+            ResultSet rs = null;
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                x = new User();
+                x.setID(rs.getString("ID"));
+                x.setName(rs.getString("name"));
+                x.setPassword(rs.getString("password"));
+                x.setEmail(rs.getString("Email"));
+                x.setGender(rs.getString("Gender"));
+                x.setBirthdate(rs.getString("Birthdate"));
+                list.add(x);
+            }
+            PrintWriter writer = resp.getWriter();
+            writer.println("<table border=\"1\">  <tr> <th>ID</th> <th>name</th> <th>password</th> <th>Email</th> <th>Gender</th> <th>Birthdate</th> </tr>");
+            for (User ur: list) {
+                writer.println("<tr>");
+                writer.println("<td>" + ur.getID() + "</td>"
+                + "<td>" + ur.getName() + "</td>"
+                + "<td>" + ur.getPassword() + "</td>"
+                + "<td>" + ur.getEmail() + "</td>"
+                + "<td>" + ur.getGender() + "</td>"
+                + "<td>" + ur.getBirthdate() + "</td>");
+                writer.println("</tr>");
+            }
+            writer.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        resp.sendRedirect("Login.jsp");
     }
 
     @Override

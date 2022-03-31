@@ -1,5 +1,8 @@
 package com.FanXuyang.week5.demo;
 
+import com.FanXuyang.dao.UserDao;
+import com.FanXuyang.model.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,60 +33,77 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("ID");
-        String password = req.getParameter("password");
-        String sql = "select * from user where ID =" + id + ";";
-
-        System.out.println(sql);
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            boolean ok = false;
-            while (rs.next()) {
-                String t = rs.getString("password");
-                String name = rs.getString("name");
-                if(t.equals(password)) {
-//                    PrintWriter writer = resp.getWriter();
-//                    writer.println("<h1>Login success!!!</h1>");
-//                    writer.println("<p>Welcome " + name + "</p>");
+        req.getRequestDispatcher("WEB-INF/views/Login.jsp").forward(req,resp);
+//        String id = req.getParameter("ID");
+//        String password = req.getParameter("password");
+//        String sql = "select * from user where ID =" + id + ";";
+//
+//        System.out.println(sql);
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        try {
+//            ps = con.prepareStatement(sql);
+//            rs = ps.executeQuery();
+//            boolean ok = false;
+//            while (rs.next()) {
+//                String t = rs.getString("password");
+//                String name = rs.getString("name");
+//                if(t.equals(password)) {
+////                    PrintWriter writer = resp.getWriter();
+////                    writer.println("<h1>Login success!!!</h1>");
+////                    writer.println("<p>Welcome " + name + "</p>");
+////                    ok = true;
+//                    req.setAttribute("id", rs.getString("id"));
+//                    req.setAttribute("name", rs.getString("name"));
+//                    req.setAttribute("password", rs.getString("password"));
+//                    req.setAttribute("email", rs.getString("email"));
+//                    req.setAttribute("gender", rs.getString("gender"));
+//                    req.setAttribute("birthdate", rs.getString("birthdate"));
+//                    req.getRequestDispatcher("usrInfo.jsp").forward(req,resp);
 //                    ok = true;
-                    req.setAttribute("id", rs.getString("id"));
-                    req.setAttribute("name", rs.getString("name"));
-                    req.setAttribute("password", rs.getString("password"));
-                    req.setAttribute("email", rs.getString("email"));
-                    req.setAttribute("gender", rs.getString("gender"));
-                    req.setAttribute("birthdate", rs.getString("birthdate"));
-                    req.getRequestDispatcher("usrInfo.jsp").forward(req,resp);
-                    ok = true;
-                } else {
-                    System.out.println("Fail Login!!!");
-                    req.setAttribute("messsage", "ID or password Error !!! ");
-                    req.getRequestDispatcher("Login.jsp").forward(req, resp);
-//                    PrintWriter writer = resp.getWriter();
-//                    writer.println("<h1>Error success!!!</h1>");
-//                    writer.println("<p>Please Try again</P>");
-                }
-            }
-            if(!ok) {
-//                PrintWriter writer = resp.getWriter();
-//                writer.println("<h1>Error success!!!</h1>");
-//                writer.println("<p>Please Try again</P>");
-                System.out.println("Fail Login!!!");
-                req.setAttribute("message", "ID or password Error !!! ");
-                req.getRequestDispatcher("Login.jsp").forward(req, resp);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+//                } else {
+//                    System.out.println("Fail Login!!!");
+//                    req.setAttribute("messsage", "ID or password Error !!! ");
+//                    req.getRequestDispatcher("Login.jsp").forward(req, resp);
+////                    PrintWriter writer = resp.getWriter();
+////                    writer.println("<h1>Error success!!!</h1>");
+////                    writer.println("<p>Please Try again</P>");
+//                }
+//            }
+//            if(!ok) {
+////                PrintWriter writer = resp.getWriter();
+////                writer.println("<h1>Error success!!!</h1>");
+////                writer.println("<p>Please Try again</P>");
+//                System.out.println("Fail Login!!!");
+//                req.setAttribute("message", "ID or password Error !!! ");
+//                req.getRequestDispatcher("Login.jsp").forward(req, resp);
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+//        doGet(req, resp);
+        PrintWriter writer = resp.getWriter();
+        String name = req.getParameter("ID");
+        String password = req.getParameter("password");
+        UserDao userdao = new UserDao();
+        try {
+            User user = userdao.findByUsernamePassword(con, name, password);
+            if (user != null) {
+                req.setAttribute("user", user);
+                req.getRequestDispatcher("WEB-INF/views/usrInfo.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("message", "Username or password is Error !!!");
+                req.getRequestDispatcher("WEB-INF/views/Login.jsp").forward(req, resp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
