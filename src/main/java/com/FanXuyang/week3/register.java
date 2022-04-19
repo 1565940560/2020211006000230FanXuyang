@@ -35,12 +35,18 @@ public class register extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("ID");
+        req.getRequestDispatcher("WEB-INF/views/register.jsp").forward(req, resp);
+//        resp.sendRedirect("Login.jsp");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("username");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String gender = req.getParameter("gender");
-        String Birthdate = req.getParameter("Birthdate");
+        String Birthdate = req.getParameter("birthdate");
         String sql = "insert into user values ('" + id + "', '" + username + "', '" + password + "', '" +
                 email + "', '" + gender + "', '" + Birthdate + "');";
         System.out.println(sql);
@@ -75,23 +81,17 @@ public class register extends HttpServlet {
             for (User ur: list) {
                 writer.println("<tr>");
                 writer.println("<td>" + ur.getID() + "</td>"
-                + "<td>" + ur.getName() + "</td>"
-                + "<td>" + ur.getPassword() + "</td>"
-                + "<td>" + ur.getEmail() + "</td>"
-                + "<td>" + ur.getGender() + "</td>"
-                + "<td>" + ur.getBirthdate() + "</td>");
+                        + "<td>" + ur.getName() + "</td>"
+                        + "<td>" + ur.getPassword() + "</td>"
+                        + "<td>" + ur.getEmail() + "</td>"
+                        + "<td>" + ur.getGender() + "</td>"
+                        + "<td>" + ur.getBirthdate() + "</td>");
                 writer.println("</tr>");
             }
             writer.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        resp.sendRedirect("Login.jsp");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 
     @Override
