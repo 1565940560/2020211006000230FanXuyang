@@ -12,6 +12,8 @@ public class AdminHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+//        if(session != null) System.out.println("1111");
+//        System.out.println(session.getAttribute("user") != null);
         if (session != null && session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
                 if("admin".equals(user.getName())) {
@@ -19,11 +21,11 @@ public class AdminHomeServlet extends HttpServlet {
                 } else {
                     session.invalidate();
                     request.setAttribute("message", "Unauthorized Access Admin Moudle !!!");
-                    request.getRequestDispatcher("../WEB-INF/views/login.jsp").forward(request,response);
+                    request.getRequestDispatcher("../WEB-INF/views/Login.jsp").forward(request,response);
                 }
         } else {
             request.setAttribute("message", "Please Login as admin !!!");
-            request.getRequestDispatcher("../WEB-INF/views/Login.jsp");
+            request.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(request, response);
         }
     }
 
