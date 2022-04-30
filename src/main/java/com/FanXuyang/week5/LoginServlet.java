@@ -99,7 +99,7 @@ public class LoginServlet extends HttpServlet {
                 // 创建一个session
                 HttpSession session = req.getSession();
                 System.out.println("session id -> " + session.getId());
-                session.setMaxInactiveInterval(10);
+                session.setMaxInactiveInterval(3600);
                 session.setAttribute("user", user);
                 req.getRequestDispatcher("WEB-INF/views/usrInfo.jsp").forward(req, resp);
             } else {
