@@ -17,7 +17,7 @@
     <jsp:useBean id="user" scope="request" class="com.FanXuyang.model.User"/>
     <jsp:getProperty name="user" property="name"/>
     <%--todo 10 : use jsp:getProperty to display username --%>
-    
+<%--    --%>
 </h2>
 </body>
 </html>
