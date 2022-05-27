@@ -42,8 +42,6 @@
 </form>	
 					</div><!--/login form-->
 				</div>
-				
-				
 			</div>
 		</div>
 	</section><!--/form-->

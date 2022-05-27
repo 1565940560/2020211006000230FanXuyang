@@ -27,7 +27,6 @@ public class CategoryDao implements IcategoryDao{
         }
         return categoryList;
     }
-
     @Override
     public String findByCategoryId(Connection con, int categoryId) throws SQLException {
         String res = null;
