@@ -69,6 +69,15 @@ public  class Payment implements java.io.Serializable {
 		this.allowed = allowed;
 	}
 
+	@Override
+	public String toString() {
+		return "Payment{" +
+				"paymentId=" + paymentId +
+				", paymentType='" + paymentType + '\'' +
+				", allowed=" + allowed +
+				'}';
+	}
+
 	public static List<Payment> findAllPayment(Connection con){
 		List<Payment> list=new ArrayList<Payment>();
 		try {

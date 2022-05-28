@@ -76,6 +76,7 @@ public class OrderServlet extends HttpServlet {
         o.setCountry(country);
         o.setNotes(notes);
         o.setOrderTotal(orderTotal);
+        System.out.println(o);
         HttpSession session = request.getSession(false);
         if(session != null && session.getAttribute("cart") != null) {
             ArrayList<Item> cartItems = (ArrayList<Item>) session.getAttribute("cart");
@@ -91,6 +92,8 @@ public class OrderServlet extends HttpServlet {
         System.out.println(n);
         if(n > 0) {
             request.getRequestDispatcher("/WEB-INF/views/orderSuccess.jsp").forward(request,response);
+        } else {
+            request.getRequestDispatcher("/fail.jsp").forward(request,response);
         }
     }
 }

@@ -34,7 +34,7 @@ public class AccountDetailsServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
-            String id = user.getID();
+            int id = Integer.parseInt(user.getID());
             UserDao userDao = new UserDao();
             try {
                 user = userDao.findById(con, id);

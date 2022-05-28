@@ -57,7 +57,7 @@ public class UserDao implements IUserDao{
     }
 
     @Override
-    public User findById(Connection con, String  id) throws SQLException {
+    public User findById(Connection con, int  id) throws SQLException {
         String sql = "select * from user where ID = '" + id + "';";
         User user = null;
         try {
